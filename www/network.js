@@ -53,12 +53,12 @@ var timeout = 500;
 channel.createSticky('onCordovaConnectionReady');
 channel.waitForInitialization('onCordovaConnectionReady');
 
-channel.onCordovaReady.subscribe(function() {
-    me.getInfo(function(info) {
+function waitForConnectionReady() {
+    me.getInfo(function (info) {
         me.type = info;
         if (info === "none") {
             // set a timer if still offline at the end of timer send the offline event
-            timerId = setTimeout(function(){
+            timerId = setTimeout(function () {
                 cordova.fireDocumentEvent("offline");
                 timerId = null;
             }, timeout);
@@ -74,6 +74,7 @@ channel.onCordovaReady.subscribe(function() {
         // should only fire this once
         if (channel.onCordovaConnectionReady.state !== 2) {
             channel.onCordovaConnectionReady.fire();
+            channel.onCordovaReady.unsubscribe(waitForConnectionReady);
         }
     },
     function (e) {
@@ -81,9 +82,12 @@ channel.onCordovaReady.subscribe(function() {
         // to fire the deviceready event.
         if (channel.onCordovaConnectionReady.state !== 2) {
             channel.onCordovaConnectionReady.fire();
+            channel.onCordovaReady.unsubscribe(waitForConnectionReady);
         }
         console.log("Error initializing Network Connection: " + e);
     });
-});
+};
+
+channel.onCordovaReady.subscribe(waitForConnectionReady);
 
 module.exports = me;

@@ -52,10 +52,10 @@ namespace WPCordovaClassLib.Cordova.Commands
 
         public override void OnResume(object sender, Microsoft.Phone.Shell.ActivatedEventArgs e)
         {
-            this.getConnectionInfo("");
+            this.getConnectionInfo();
         }
 
-        public void getConnectionInfo(string empty)
+        public void getConnectionInfo()
         {
             HasCallback = true;
             updateConnectionType(checkConnectionType());
