@@ -1,0 +1,7 @@
+Android L changes type from Mobile to Cellular
+- Cordova RTC work item number: 53257
+- Apache Cordova Jira issue: https://issues.apache.org/jira/browse/CB-7595
+- Markmail / Google Group / StackOverflow reference:
+- IBM PMR: (found before shipped)
+- Worklight RTC work item number:
+- Full description: Android L changes the network type from “mobile” to “cellular”, was returning “unknown” when connected to cellular network because of this issue
